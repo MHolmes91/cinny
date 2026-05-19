@@ -30,7 +30,7 @@ import { AuthFlowsLoader } from '../../components/AuthFlowsLoader';
 import { AuthFlowsProvider } from '../../hooks/useAuthFlows';
 import { AuthServerProvider } from '../../hooks/useAuthServer';
 import { tryDecodeURIComponent } from '../../utils/dom';
-import { getBranding } from '../../config/branding';
+import { getAuthUI, getBranding } from '../../config/branding';
 
 const currentAuthPath = (pathname: string): string => {
   if (matchPath(LOGIN_PATH, pathname)) {
@@ -73,6 +73,7 @@ export function AuthLayout() {
 
   const clientConfig = useClientConfig();
   const branding = getBranding(clientConfig);
+  const authUI = getAuthUI(clientConfig);
 
   const defaultServer = clientDefaultServer(clientConfig);
   let server: string = urlEncodedServer ? tryDecodeURIComponent(urlEncodedServer) : defaultServer;
@@ -81,10 +82,7 @@ export function AuthLayout() {
     server = defaultServer;
   }
 
-  const hideHomeserverPicker =
-    branding.hideHomeserverPickerWhenFixed &&
-    !clientConfig.allowCustomHomeservers &&
-    (clientConfig.homeserverList?.length ?? 0) <= 1;
+  const hideHomeserverPicker = authUI.hideHomeserver;
 
   const [discoveryState, discoverServer] = useAsyncCallback(
     useCallback(async (serverName: string) => {

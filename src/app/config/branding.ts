@@ -12,10 +12,10 @@ export const defaultBranding = {
   sourceCodeLabel: 'Source Code',
   supportLabel: 'Support',
   showOtherAuthOptionsLabel: 'Show other sign-in options',
-  hideHomeserverPickerWhenFixed: true,
 } satisfies Required<BrandingConfig>;
 
 export const defaultAuthUI = {
+  hideHomeserver: true,
   primaryOptions: ['sso'],
   otherOptions: ['password', 'account-switch'],
 } satisfies Required<AuthUIConfig>;
@@ -26,6 +26,7 @@ export const getBranding = (clientConfig: ClientConfig): Required<BrandingConfig
 });
 
 export const getAuthUI = (clientConfig: ClientConfig): Required<AuthUIConfig> => ({
+  hideHomeserver: clientConfig.ui?.auth?.hideHomeserver ?? defaultAuthUI.hideHomeserver,
   primaryOptions: clientConfig.ui?.auth?.primaryOptions ?? defaultAuthUI.primaryOptions,
   otherOptions: clientConfig.ui?.auth?.otherOptions ?? defaultAuthUI.otherOptions,
 });

@@ -14,12 +14,12 @@
     "aboutSubtitle": "A private Matrix client.",
     "sourceCodeLabel": "Source Code",
     "supportLabel": "Support",
-    "showOtherAuthOptionsLabel": "Show other sign-in options",
-    "hideHomeserverPickerWhenFixed": true
+    "showOtherAuthOptionsLabel": "Show other sign-in options"
   },
 
   "ui": {
     "auth": {
+      "hideHomeserver": true,
       "primaryOptions": ["sso"],
       "otherOptions": ["password", "account-switch"]
     }

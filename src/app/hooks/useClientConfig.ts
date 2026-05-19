@@ -17,12 +17,12 @@ export type BrandingConfig = {
   sourceCodeLabel?: string;
   supportLabel?: string;
   showOtherAuthOptionsLabel?: string;
-  hideHomeserverPickerWhenFixed?: boolean;
 };
 
 export type AuthOption = 'token' | 'sso' | 'password' | 'account-switch';
 
 export type AuthUIConfig = {
+  hideHomeserver?: boolean;
   primaryOptions?: AuthOption[];
   otherOptions?: AuthOption[];
 };
