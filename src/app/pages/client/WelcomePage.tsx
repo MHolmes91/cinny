@@ -2,9 +2,12 @@ import React from 'react';
 import { Box, Button, Icon, Icons, Text, config, toRem } from 'folds';
 import { Page, PageHero, PageHeroSection } from '../../components/page';
 import CinnySVG from '../../../../public/res/svg/cinny.svg';
-import { branding } from '../../config/branding';
+import { getBranding } from '../../config/branding';
+import { useClientConfig } from '../../hooks/useClientConfig';
 
 export function WelcomePage() {
+  const branding = getBranding(useClientConfig());
+
   return (
     <Page>
       <Box

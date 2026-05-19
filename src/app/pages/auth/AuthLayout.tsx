@@ -30,7 +30,7 @@ import { AuthFlowsLoader } from '../../components/AuthFlowsLoader';
 import { AuthFlowsProvider } from '../../hooks/useAuthFlows';
 import { AuthServerProvider } from '../../hooks/useAuthServer';
 import { tryDecodeURIComponent } from '../../utils/dom';
-import { branding } from '../../config/branding';
+import { getBranding } from '../../config/branding';
 
 const currentAuthPath = (pathname: string): string => {
   if (matchPath(LOGIN_PATH, pathname)) {
@@ -72,6 +72,7 @@ export function AuthLayout() {
   const { server: urlEncodedServer } = useParams();
 
   const clientConfig = useClientConfig();
+  const branding = getBranding(clientConfig);
 
   const defaultServer = clientDefaultServer(clientConfig);
   let server: string = urlEncodedServer ? tryDecodeURIComponent(urlEncodedServer) : defaultServer;

@@ -3,12 +3,13 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import * as patternsCSS from '../../styles/Patterns.css';
 import * as css from './SplashScreen.css';
-import { branding } from '../../config/branding';
+import { defaultBranding } from '../../config/branding';
 
 type SplashScreenProps = {
   children: ReactNode;
+  footer?: ReactNode;
 };
-export function SplashScreen({ children }: SplashScreenProps) {
+export function SplashScreen({ children, footer }: SplashScreenProps) {
   return (
     <Box
       className={classNames(css.SplashScreen, patternsCSS.BackgroundDotPattern)}
@@ -22,7 +23,7 @@ export function SplashScreen({ children }: SplashScreenProps) {
         justifyContent="Center"
       >
         <Text size="H2" align="Center">
-          {branding.appName}
+          {footer ?? defaultBranding.appName}
         </Text>
       </Box>
     </Box>

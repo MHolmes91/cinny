@@ -7,13 +7,15 @@ import { SettingTile } from '../../../components/setting-tile';
 import CinnySVG from '../../../../../public/res/svg/cinny.svg';
 import { clearCacheAndReload } from '../../../../client/initMatrix';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
-import { branding } from '../../../config/branding';
+import { getBranding } from '../../../config/branding';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 
 type AboutProps = {
   requestClose: () => void;
 };
 export function About({ requestClose }: AboutProps) {
   const mx = useMatrixClient();
+  const branding = getBranding(useClientConfig());
 
   return (
     <Page>

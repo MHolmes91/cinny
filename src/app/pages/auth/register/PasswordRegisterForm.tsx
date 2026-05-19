@@ -43,7 +43,8 @@ import { useRegisterEmail } from '../../../hooks/useRegisterEmail';
 import { ConfirmPasswordMatch } from '../../../components/ConfirmPasswordMatch';
 import { UIAFlowOverlay } from '../../../components/UIAFlowOverlay';
 import { RequestEmailTokenCallback, RequestEmailTokenResponse } from '../../../hooks/types';
-import { branding } from '../../../config/branding';
+import { getBranding } from '../../../config/branding';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 
 export const SUPPORTED_REGISTER_STAGES = [
   AuthType.RegistrationToken,
@@ -98,6 +99,7 @@ function RegisterUIAFlow({
   registerEmail,
   onRegister,
 }: RegisterUIAFlowProps) {
+  const branding = getBranding(useClientConfig());
   const completed = useUIACompleted(authData);
   const { getStageToComplete } = useUIAFlow(authData, flow);
 
@@ -185,6 +187,7 @@ export function PasswordRegisterForm({
   defaultEmail,
   defaultRegisterToken,
 }: PasswordRegisterFormProps) {
+  const branding = getBranding(useClientConfig());
   const serverDiscovery = useAutoDiscoveryInfo();
   const baseUrl = serverDiscovery['m.homeserver'].base_url;
   const mx = useMemo(() => createClient({ baseUrl }), [baseUrl]);

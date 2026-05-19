@@ -15,7 +15,8 @@ import { MatrixError } from 'matrix-js-sdk';
 import { useAutoDiscoveryInfo } from '../../../hooks/useAutoDiscoveryInfo';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { CustomLoginResponse, LoginError, login, useLoginComplete } from './loginUtil';
-import { branding } from '../../../config/branding';
+import { getBranding } from '../../../config/branding';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 
 function LoginTokenError({ message }: { message: string }) {
   return (
@@ -45,6 +46,7 @@ type TokenLoginProps = {
   token: string;
 };
 export function TokenLogin({ token }: TokenLoginProps) {
+  const branding = getBranding(useClientConfig());
   const discovery = useAutoDiscoveryInfo();
   const baseUrl = discovery['m.homeserver'].base_url;
 

@@ -1,4 +1,6 @@
-export const branding = {
+import { AuthUIConfig, BrandingConfig, ClientConfig } from '../hooks/useClientConfig';
+
+export const defaultBranding = {
   appName: 'My Title',
   deviceName: 'My Title Web',
   logoAlt: 'My Title logo',
@@ -9,7 +11,21 @@ export const branding = {
   aboutSubtitle: 'A private Matrix client.',
   sourceCodeLabel: 'Source Code',
   supportLabel: 'Support',
-  showOtherLoginOptionsLabel: 'Show other login options',
-  showOtherRegisterOptionsLabel: 'Show other registration options',
+  showOtherAuthOptionsLabel: 'Show other sign-in options',
   hideHomeserverPickerWhenFixed: true,
-} as const;
+} satisfies Required<BrandingConfig>;
+
+export const defaultAuthUI = {
+  primaryOptions: ['sso'],
+  otherOptions: ['password', 'account-switch'],
+} satisfies Required<AuthUIConfig>;
+
+export const getBranding = (clientConfig: ClientConfig): Required<BrandingConfig> => ({
+  ...defaultBranding,
+  ...clientConfig.branding,
+});
+
+export const getAuthUI = (clientConfig: ClientConfig): Required<AuthUIConfig> => ({
+  primaryOptions: clientConfig.ui?.auth?.primaryOptions ?? defaultAuthUI.primaryOptions,
+  otherOptions: clientConfig.ui?.auth?.otherOptions ?? defaultAuthUI.otherOptions,
+});

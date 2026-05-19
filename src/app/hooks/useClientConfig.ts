@@ -5,6 +5,28 @@ export type HashRouterConfig = {
   basename?: string;
 };
 
+export type BrandingConfig = {
+  appName?: string;
+  deviceName?: string;
+  logoAlt?: string;
+  loadingText?: string;
+  authDescription?: string;
+  welcomeTitle?: string;
+  welcomeSubtitle?: string;
+  aboutSubtitle?: string;
+  sourceCodeLabel?: string;
+  supportLabel?: string;
+  showOtherAuthOptionsLabel?: string;
+  hideHomeserverPickerWhenFixed?: boolean;
+};
+
+export type AuthOption = 'token' | 'sso' | 'password' | 'account-switch';
+
+export type AuthUIConfig = {
+  primaryOptions?: AuthOption[];
+  otherOptions?: AuthOption[];
+};
+
 export type ClientConfig = {
   defaultHomeserver?: number;
   homeserverList?: string[];
@@ -18,6 +40,10 @@ export type ClientConfig = {
   };
 
   hashRouter?: HashRouterConfig;
+  branding?: BrandingConfig;
+  ui?: {
+    auth?: AuthUIConfig;
+  };
 };
 
 const ClientConfigContext = createContext<ClientConfig | null>(null);

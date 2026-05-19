@@ -37,7 +37,7 @@ import { PasswordInput } from '../../../components/password-input';
 import { FieldError } from '../FiledError';
 import { getResetPasswordPath } from '../../pathUtils';
 import { stopPropagation } from '../../../utils/keyboard';
-import { branding } from '../../../config/branding';
+import { getBranding } from '../../../config/branding';
 
 function UsernameHint({ server }: { server: string }) {
   const [anchor, setAnchor] = useState<RectCords>();
@@ -114,6 +114,7 @@ type PasswordLoginFormProps = {
 export function PasswordLoginForm({ defaultUsername, defaultEmail }: PasswordLoginFormProps) {
   const server = useAuthServer();
   const clientConfig = useClientConfig();
+  const branding = getBranding(clientConfig);
 
   const serverDiscovery = useAutoDiscoveryInfo();
   const baseUrl = serverDiscovery['m.homeserver'].base_url;

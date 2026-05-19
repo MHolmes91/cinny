@@ -10,10 +10,12 @@ import { getNotificationState, usePermissionState } from '../../../hooks/usePerm
 import { useEmailNotifications } from '../../../hooks/useEmailNotifications';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
-import { branding } from '../../../config/branding';
+import { getBranding } from '../../../config/branding';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 
 function EmailNotification() {
   const mx = useMatrixClient();
+  const branding = getBranding(useClientConfig());
   const [result, refreshResult] = useEmailNotifications();
 
   const [setState, setEnable] = useAsyncCallback(
