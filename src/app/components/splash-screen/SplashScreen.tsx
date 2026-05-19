@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import * as patternsCSS from '../../styles/Patterns.css';
 import * as css from './SplashScreen.css';
+import { branding } from '../../config/branding';
 
 type SplashScreenProps = {
   children: ReactNode;
@@ -21,7 +22,7 @@ export function SplashScreen({ children }: SplashScreenProps) {
         justifyContent="Center"
       >
         <Text size="H2" align="Center">
-          Cinny
+          {branding.appName}
         </Text>
       </Box>
     </Box>

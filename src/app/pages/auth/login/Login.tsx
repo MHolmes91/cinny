@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Box, Text, color } from 'folds';
+import React, { useMemo, useState } from 'react';
+import { Box, Button, Text, color } from 'folds';
 import { Link, useSearchParams } from 'react-router-dom';
 import { SSOAction } from 'matrix-js-sdk';
 import { useAuthFlows } from '../../../hooks/useAuthFlows';
@@ -13,6 +13,7 @@ import { getLoginPath, getRegisterPath, withSearchParam } from '../../pathUtils'
 import { usePathWithOrigin } from '../../../hooks/usePathWithOrigin';
 import { LoginPathSearchParams } from '../../paths';
 import { useClientConfig } from '../../../hooks/useClientConfig';
+import { branding } from '../../../config/branding';
 
 const getLoginTokenSearchParam = () => {
   // when using hasRouter query params in existing route
@@ -53,6 +54,9 @@ export function Login() {
   }
 
   const parsedFlows = useParsedLoginFlows(loginFlows.flows);
+  const [showOtherOptions, setShowOtherOptions] = useState(false);
+  const collapseOtherOptions = parsedFlows.sso !== undefined;
+  const showSecondaryOptions = !collapseOtherOptions || showOtherOptions;
 
   return (
     <Box direction="Column" gap="500">
@@ -62,23 +66,30 @@ export function Login() {
       {parsedFlows.token && loginSearchParams.loginToken && (
         <TokenLogin token={loginSearchParams.loginToken} />
       )}
-      {parsedFlows.password && (
-        <>
-          <PasswordLoginForm
-            defaultUsername={loginSearchParams.username}
-            defaultEmail={loginSearchParams.email}
-          />
-          <span data-spacing-node />
-          {parsedFlows.sso && <OrDivider />}
-        </>
-      )}
       {parsedFlows.sso && (
         <>
           <SSOLogin
             providers={parsedFlows.sso.identity_providers}
             redirectUrl={ssoRedirectUrl}
             action={SSOAction.LOGIN}
-            saveScreenSpace={parsedFlows.password !== undefined}
+            saveScreenSpace={false}
+          />
+          <span data-spacing-node />
+        </>
+      )}
+      {collapseOtherOptions && !showOtherOptions && (
+        <Button variant="Secondary" fill="Soft" onClick={() => setShowOtherOptions(true)}>
+          <Text as="span" size="B400">
+            {branding.showOtherLoginOptionsLabel}
+          </Text>
+        </Button>
+      )}
+      {showSecondaryOptions && parsedFlows.password && (
+        <>
+          {parsedFlows.sso && <OrDivider />}
+          <PasswordLoginForm
+            defaultUsername={loginSearchParams.username}
+            defaultEmail={loginSearchParams.email}
           />
           <span data-spacing-node />
         </>
@@ -91,9 +102,11 @@ export function Login() {
           <span data-spacing-node />
         </>
       )}
-      <Text align="Center">
-        Do not have an account? <Link to={getRegisterPath(server)}>Register</Link>
-      </Text>
+      {showSecondaryOptions && (
+        <Text align="Center">
+          Do not have an account? <Link to={getRegisterPath(server)}>Register</Link>
+        </Text>
+      )}
     </Box>
   );
 }

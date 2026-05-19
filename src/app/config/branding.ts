@@ -1,0 +1,15 @@
+export const branding = {
+  appName: 'My Title',
+  deviceName: 'My Title Web',
+  logoAlt: 'My Title logo',
+  loadingText: 'Loading My Title',
+  authDescription: 'Sign in with your organization account to start chatting.',
+  welcomeTitle: 'Welcome to My Title',
+  welcomeSubtitle: 'A private Matrix client for your community.',
+  aboutSubtitle: 'A private Matrix client.',
+  sourceCodeLabel: 'Source Code',
+  supportLabel: 'Support',
+  showOtherLoginOptionsLabel: 'Show other login options',
+  showOtherRegisterOptionsLabel: 'Show other registration options',
+  hideHomeserverPickerWhenFixed: true,
+} as const;

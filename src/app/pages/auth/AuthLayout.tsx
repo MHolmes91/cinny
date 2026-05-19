@@ -30,6 +30,7 @@ import { AuthFlowsLoader } from '../../components/AuthFlowsLoader';
 import { AuthFlowsProvider } from '../../hooks/useAuthFlows';
 import { AuthServerProvider } from '../../hooks/useAuthServer';
 import { tryDecodeURIComponent } from '../../utils/dom';
+import { branding } from '../../config/branding';
 
 const currentAuthPath = (pathname: string): string => {
   if (matchPath(LOGIN_PATH, pathname)) {
@@ -78,6 +79,11 @@ export function AuthLayout() {
   if (!clientAllowedServer(clientConfig, server)) {
     server = defaultServer;
   }
+
+  const hideHomeserverPicker =
+    branding.hideHomeserverPickerWhenFixed &&
+    !clientConfig.allowCustomHomeservers &&
+    (clientConfig.homeserverList?.length ?? 0) <= 1;
 
   const [discoveryState, discoverServer] = useAsyncCallback(
     useCallback(async (serverName: string) => {
@@ -134,22 +140,27 @@ export function AuthLayout() {
         <Box direction="Column" className={css.AuthCard}>
           <Header className={css.AuthHeader} size="600" variant="Surface">
             <Box grow="Yes" direction="Row" gap="300" alignItems="Center">
-              <img className={css.AuthLogo} src={CinnySVG} alt="Cinny Logo" />
-              <Text size="H3">Cinny</Text>
+              <img className={css.AuthLogo} src={CinnySVG} alt={branding.logoAlt} />
+              <Text size="H3">{branding.appName}</Text>
             </Box>
           </Header>
           <Box className={css.AuthCardContent} direction="Column">
-            <Box direction="Column" gap="100">
-              <Text as="label" size="L400" priority="300">
-                Homeserver
-              </Text>
-              <ServerPicker
-                server={server}
-                serverList={clientConfig.homeserverList ?? []}
-                allowCustomServer={clientConfig.allowCustomHomeservers}
-                onServerChange={selectServer}
-              />
-            </Box>
+            <Text size="T300" priority="300">
+              {branding.authDescription}
+            </Text>
+            {!hideHomeserverPicker && (
+              <Box direction="Column" gap="100">
+                <Text as="label" size="L400" priority="300">
+                  Homeserver
+                </Text>
+                <ServerPicker
+                  server={server}
+                  serverList={clientConfig.homeserverList ?? []}
+                  allowCustomServer={clientConfig.allowCustomHomeservers}
+                  onServerChange={selectServer}
+                />
+              </Box>
+            )}
             {discoveryState.status === AsyncStatus.Loading && (
               <AuthLayoutLoading message="Looking for homeserver..." />
             )}
