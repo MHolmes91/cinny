@@ -7,12 +7,15 @@ import { SettingTile } from '../../../components/setting-tile';
 import CinnySVG from '../../../../../public/res/svg/cinny.svg';
 import { clearCacheAndReload } from '../../../../client/initMatrix';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
+import { getBranding } from '../../../config/branding';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 
 type AboutProps = {
   requestClose: () => void;
 };
 export function About({ requestClose }: AboutProps) {
   const mx = useMatrixClient();
+  const branding = getBranding(useClientConfig());
 
   return (
     <Page>
@@ -39,16 +42,16 @@ export function About({ requestClose }: AboutProps) {
                   <img
                     style={{ width: toRem(60), height: toRem(60) }}
                     src={CinnySVG}
-                    alt="Cinny logo"
+                    alt={branding.logoAlt}
                   />
                 </Box>
                 <Box direction="Column" gap="300">
                   <Box direction="Column" gap="100">
                     <Box gap="100" alignItems="End">
-                      <Text size="H3">Cinny</Text>
+                      <Text size="H3">{branding.appName}</Text>
                       <Text size="T200">v4.12.1</Text>
                     </Box>
-                    <Text>Yet another matrix client.</Text>
+                    <Text>{branding.aboutSubtitle}</Text>
                   </Box>
 
                   <Box gap="200" wrap="Wrap">
@@ -63,7 +66,7 @@ export function About({ requestClose }: AboutProps) {
                       radii="300"
                       before={<Icon src={Icons.Code} size="100" filled />}
                     >
-                      <Text size="B300">Source Code</Text>
+                      <Text size="B300">{branding.sourceCodeLabel}</Text>
                     </Button>
                     <Button
                       as="a"
@@ -76,7 +79,7 @@ export function About({ requestClose }: AboutProps) {
                       radii="300"
                       before={<Icon src={Icons.Heart} size="100" filled />}
                     >
-                      <Text size="B300">Support</Text>
+                      <Text size="B300">{branding.supportLabel}</Text>
                     </Button>
                   </Box>
                 </Box>

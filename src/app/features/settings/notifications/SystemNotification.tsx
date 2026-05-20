@@ -10,9 +10,12 @@ import { getNotificationState, usePermissionState } from '../../../hooks/usePerm
 import { useEmailNotifications } from '../../../hooks/useEmailNotifications';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
+import { getBranding } from '../../../config/branding';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 
 function EmailNotification() {
   const mx = useMatrixClient();
+  const branding = getBranding(useClientConfig());
   const [result, refreshResult] = useEmailNotifications();
 
   const [setState, setEnable] = useAsyncCallback(
@@ -27,7 +30,7 @@ function EmailNotification() {
             device_display_name: email,
             lang: 'en',
             data: {
-              brand: 'Cinny',
+              brand: branding.appName,
             },
             append: true,
           });

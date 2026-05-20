@@ -1,18 +1,15 @@
 import React, { useMemo } from 'react';
 import { Box, Text, color } from 'folds';
-import { Link, useSearchParams } from 'react-router-dom';
-import { SSOAction } from 'matrix-js-sdk';
+import { useSearchParams } from 'react-router-dom';
 import { useAuthFlows } from '../../../hooks/useAuthFlows';
 import { useAuthServer } from '../../../hooks/useAuthServer';
-import { useParsedLoginFlows } from '../../../hooks/useParsedLoginFlows';
-import { PasswordLoginForm } from './PasswordLoginForm';
-import { SSOLogin } from '../SSOLogin';
+import { ParsedLoginFlows, useParsedLoginFlows } from '../../../hooks/useParsedLoginFlows';
 import { TokenLogin } from './TokenLogin';
-import { OrDivider } from '../OrDivider';
-import { getLoginPath, getRegisterPath, withSearchParam } from '../../pathUtils';
+import { getLoginPath, withSearchParam } from '../../pathUtils';
 import { usePathWithOrigin } from '../../../hooks/usePathWithOrigin';
 import { LoginPathSearchParams } from '../../paths';
 import { useClientConfig } from '../../../hooks/useClientConfig';
+import { LoginOptions } from './LoginOptions';
 
 const getLoginTokenSearchParam = () => {
   // when using hasRouter query params in existing route
@@ -36,7 +33,8 @@ const useLoginSearchParams = (searchParams: URLSearchParams): LoginPathSearchPar
 
 export function Login() {
   const server = useAuthServer();
-  const { hashRouter } = useClientConfig();
+  const clientConfig = useClientConfig();
+  const { hashRouter } = clientConfig;
   const { loginFlows } = useAuthFlows();
   const [searchParams] = useSearchParams();
   const loginSearchParams = useLoginSearchParams(searchParams);
@@ -52,7 +50,7 @@ export function Login() {
     );
   }
 
-  const parsedFlows = useParsedLoginFlows(loginFlows.flows);
+  const parsedFlows: ParsedLoginFlows = useParsedLoginFlows(loginFlows.flows);
 
   return (
     <Box direction="Column" gap="500">
@@ -62,27 +60,12 @@ export function Login() {
       {parsedFlows.token && loginSearchParams.loginToken && (
         <TokenLogin token={loginSearchParams.loginToken} />
       )}
-      {parsedFlows.password && (
-        <>
-          <PasswordLoginForm
-            defaultUsername={loginSearchParams.username}
-            defaultEmail={loginSearchParams.email}
-          />
-          <span data-spacing-node />
-          {parsedFlows.sso && <OrDivider />}
-        </>
-      )}
-      {parsedFlows.sso && (
-        <>
-          <SSOLogin
-            providers={parsedFlows.sso.identity_providers}
-            redirectUrl={ssoRedirectUrl}
-            action={SSOAction.LOGIN}
-            saveScreenSpace={parsedFlows.password !== undefined}
-          />
-          <span data-spacing-node />
-        </>
-      )}
+      <LoginOptions
+        server={server}
+        parsedFlows={parsedFlows}
+        loginSearchParams={loginSearchParams}
+        ssoRedirectUrl={ssoRedirectUrl}
+      />
       {!parsedFlows.password && !parsedFlows.sso && (
         <>
           <Text style={{ color: color.Critical.Main }}>
@@ -91,9 +74,6 @@ export function Login() {
           <span data-spacing-node />
         </>
       )}
-      <Text align="Center">
-        Do not have an account? <Link to={getRegisterPath(server)}>Register</Link>
-      </Text>
     </Box>
   );
 }

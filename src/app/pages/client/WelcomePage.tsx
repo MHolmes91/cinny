@@ -2,8 +2,12 @@ import React from 'react';
 import { Box, Button, Icon, Icons, Text, config, toRem } from 'folds';
 import { Page, PageHero, PageHeroSection } from '../../components/page';
 import CinnySVG from '../../../../public/res/svg/cinny.svg';
+import { getBranding } from '../../config/branding';
+import { useClientConfig } from '../../hooks/useClientConfig';
 
 export function WelcomePage() {
+  const branding = getBranding(useClientConfig());
+
   return (
     <Page>
       <Box
@@ -14,11 +18,11 @@ export function WelcomePage() {
       >
         <PageHeroSection>
           <PageHero
-            icon={<img width="70" height="70" src={CinnySVG} alt="Cinny Logo" />}
-            title="Welcome to Cinny"
+            icon={<img width="70" height="70" src={CinnySVG} alt={branding.logoAlt} />}
+            title={branding.welcomeTitle}
             subTitle={
               <span>
-                Yet another matrix client.{' '}
+                {branding.welcomeSubtitle}{' '}
                 <a
                   href="https://github.com/cinnyapp/cinny/releases"
                   target="_blank"
@@ -39,7 +43,7 @@ export function WelcomePage() {
                   before={<Icon size="200" src={Icons.Code} />}
                 >
                   <Text as="span" size="B400" truncate>
-                    Source Code
+                    {branding.sourceCodeLabel}
                   </Text>
                 </Button>
                 <Button
@@ -51,7 +55,7 @@ export function WelcomePage() {
                   before={<Icon size="200" src={Icons.Heart} />}
                 >
                   <Text as="span" size="B400" truncate>
-                    Support
+                    {branding.supportLabel}
                   </Text>
                 </Button>
               </Box>
