@@ -1,19 +1,15 @@
-import React, { useMemo, useState } from 'react';
-import { Box, Button, Text, color } from 'folds';
-import { Link, useSearchParams } from 'react-router-dom';
-import { SSOAction } from 'matrix-js-sdk';
+import React, { useMemo } from 'react';
+import { Box, Text, color } from 'folds';
+import { useSearchParams } from 'react-router-dom';
 import { useAuthFlows } from '../../../hooks/useAuthFlows';
 import { useAuthServer } from '../../../hooks/useAuthServer';
-import { useParsedLoginFlows } from '../../../hooks/useParsedLoginFlows';
-import { PasswordLoginForm } from './PasswordLoginForm';
-import { SSOLogin } from '../SSOLogin';
+import { ParsedLoginFlows, useParsedLoginFlows } from '../../../hooks/useParsedLoginFlows';
 import { TokenLogin } from './TokenLogin';
-import { OrDivider } from '../OrDivider';
-import { getLoginPath, getRegisterPath, withSearchParam } from '../../pathUtils';
+import { getLoginPath, withSearchParam } from '../../pathUtils';
 import { usePathWithOrigin } from '../../../hooks/usePathWithOrigin';
 import { LoginPathSearchParams } from '../../paths';
-import { AuthOption, useClientConfig } from '../../../hooks/useClientConfig';
-import { getAuthUI, getBranding } from '../../../config/branding';
+import { useClientConfig } from '../../../hooks/useClientConfig';
+import { LoginOptions } from './LoginOptions';
 
 const getLoginTokenSearchParam = () => {
   // when using hasRouter query params in existing route
@@ -39,8 +35,6 @@ export function Login() {
   const server = useAuthServer();
   const clientConfig = useClientConfig();
   const { hashRouter } = clientConfig;
-  const branding = getBranding(clientConfig);
-  const authUI = getAuthUI(clientConfig);
   const { loginFlows } = useAuthFlows();
   const [searchParams] = useSearchParams();
   const loginSearchParams = useLoginSearchParams(searchParams);
@@ -56,49 +50,7 @@ export function Login() {
     );
   }
 
-  const parsedFlows = useParsedLoginFlows(loginFlows.flows);
-  const [showOtherOptions, setShowOtherOptions] = useState(false);
-  const isOptionAvailable = (option: AuthOption | string): boolean => {
-    if (option === 'sso') return parsedFlows.sso !== undefined;
-    if (option === 'password') return parsedFlows.password !== undefined;
-    if (option === 'account-switch') return true;
-    return false;
-  };
-  const hasPrimaryOptions = authUI.primaryOptions.some(isOptionAvailable);
-  const collapseOtherOptions = hasPrimaryOptions && authUI.otherOptions.length > 0;
-  const showSecondaryOptions = !collapseOtherOptions || showOtherOptions;
-
-  const renderAuthOption = (option: AuthOption | string) => {
-    if (option === 'sso' && parsedFlows.sso) {
-      return (
-        <SSOLogin
-          providers={parsedFlows.sso.identity_providers}
-          redirectUrl={ssoRedirectUrl}
-          action={SSOAction.LOGIN}
-          saveScreenSpace={false}
-        />
-      );
-    }
-
-    if (option === 'password' && parsedFlows.password) {
-      return (
-        <PasswordLoginForm
-          defaultUsername={loginSearchParams.username}
-          defaultEmail={loginSearchParams.email}
-        />
-      );
-    }
-
-    if (option === 'account-switch') {
-      return (
-        <Text align="Center">
-          Do not have an account? <Link to={getRegisterPath(server)}>Register</Link>
-        </Text>
-      );
-    }
-
-    return null;
-  };
+  const parsedFlows: ParsedLoginFlows = useParsedLoginFlows(loginFlows.flows);
 
   return (
     <Box direction="Column" gap="500">
@@ -108,26 +60,12 @@ export function Login() {
       {parsedFlows.token && loginSearchParams.loginToken && (
         <TokenLogin token={loginSearchParams.loginToken} />
       )}
-      {authUI.primaryOptions.map((option) => {
-        const authOption = renderAuthOption(option);
-        return authOption ? <React.Fragment key={option}>{authOption}</React.Fragment> : null;
-      })}
-      {collapseOtherOptions && !showOtherOptions && (
-        <Button variant="Secondary" fill="Soft" onClick={() => setShowOtherOptions(true)}>
-          <Text as="span" size="B400">
-            {branding.showOtherAuthOptionsLabel}
-          </Text>
-        </Button>
-      )}
-      {showSecondaryOptions && (
-        <>
-          {hasPrimaryOptions && authUI.otherOptions.some(isOptionAvailable) && <OrDivider />}
-          {authUI.otherOptions.map((option) => {
-            const authOption = renderAuthOption(option);
-            return authOption ? <React.Fragment key={option}>{authOption}</React.Fragment> : null;
-          })}
-        </>
-      )}
+      <LoginOptions
+        server={server}
+        parsedFlows={parsedFlows}
+        loginSearchParams={loginSearchParams}
+        ssoRedirectUrl={ssoRedirectUrl}
+      />
       {!parsedFlows.password && !parsedFlows.sso && (
         <>
           <Text style={{ color: color.Critical.Main }}>
