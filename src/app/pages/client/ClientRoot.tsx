@@ -36,17 +36,8 @@ import { SyncStatus } from './SyncStatus';
 import { AuthMetadataProvider } from '../../hooks/useAuthMetadata';
 import { getFallbackSession } from '../../state/sessions';
 import { AutoDiscovery } from './AutoDiscovery';
-
-function ClientRootLoading() {
-  return (
-    <SplashScreen>
-      <Box direction="Column" grow="Yes" alignItems="Center" justifyContent="Center" gap="400">
-        <Spinner variant="Secondary" size="600" />
-        <Text>Heating up</Text>
-      </Box>
-    </SplashScreen>
-  );
-}
+import { getBranding } from '../../config/branding';
+import { useClientConfig } from '../../hooks/useClientConfig';
 
 function ClientRootOptions({ mx }: { mx?: MatrixClient }) {
   const [menuAnchor, setMenuAnchor] = useState<RectCords>();
@@ -143,6 +134,7 @@ type ClientRootProps = {
   children: ReactNode;
 };
 export function ClientRoot({ children }: ClientRootProps) {
+  const branding = getBranding(useClientConfig());
   const [loading, setLoading] = useState(true);
   const { baseUrl, userId } = getFallbackSession() ?? {};
 
@@ -189,7 +181,7 @@ export function ClientRoot({ children }: ClientRootProps) {
         {mx && <SyncStatus mx={mx} />}
         {loading && <ClientRootOptions mx={mx} />}
         {(loadState.status === AsyncStatus.Error || startState.status === AsyncStatus.Error) && (
-          <SplashScreen>
+          <SplashScreen footer={branding.appName}>
             <Box
               direction="Column"
               grow="Yes"
@@ -216,7 +208,12 @@ export function ClientRoot({ children }: ClientRootProps) {
           </SplashScreen>
         )}
         {loading || !mx ? (
-          <ClientRootLoading />
+          <SplashScreen footer={branding.appName}>
+            <Box direction="Column" grow="Yes" alignItems="Center" justifyContent="Center" gap="400">
+              <Spinner variant="Secondary" size="600" />
+              <Text>{branding.loadingText}</Text>
+            </Box>
+          </SplashScreen>
         ) : (
           <MatrixClientProvider value={mx}>
             <ServerConfigsLoader>

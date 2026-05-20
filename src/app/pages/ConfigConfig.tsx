@@ -1,13 +1,14 @@
 import { Box, Button, Dialog, Spinner, Text, color, config } from 'folds';
 import React from 'react';
 import { SplashScreen } from '../components/splash-screen';
+import { defaultBranding } from '../config/branding';
 
 export function ConfigConfigLoading() {
   return (
     <SplashScreen>
       <Box grow="Yes" direction="Column" gap="400" alignItems="Center" justifyContent="Center">
         <Spinner variant="Secondary" size="600" />
-        <Text>Heating up</Text>
+        <Text>{defaultBranding.loadingText}</Text>
       </Box>
     </SplashScreen>
   );

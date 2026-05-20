@@ -1,7 +1,7 @@
 {
-  "name": "Cinny",
-  "short_name": "Cinny",
-  "description": "Yet another matrix client",
+  "name": "My Title",
+  "short_name": "My Title",
+  "description": "A private Matrix client for your community.",
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",
