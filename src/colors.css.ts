@@ -236,3 +236,101 @@ export const butterTheme = createTheme(color, {
     OnContainer: '#F2EED3',
   },
 });
+
+export const mchatTheme = createTheme(color, {
+  ...darkThemeData,
+  Background: {
+    Container: '#010100',
+    ContainerHover: '#11110D',
+    ContainerActive: '#1A1A14',
+    ContainerLine: '#2E2F23',
+    OnContainer: '#F7F7F0',
+  },
+
+  Surface: {
+    Container: '#11110D',
+    ContainerHover: '#1A1A14',
+    ContainerActive: '#24241B',
+    ContainerLine: '#383A2B',
+    OnContainer: '#F7F7F0',
+  },
+
+  SurfaceVariant: {
+    Container: '#1A1A14',
+    ContainerHover: '#24241B',
+    ContainerActive: '#2E2F23',
+    ContainerLine: '#474B35',
+    OnContainer: '#F7F7F0',
+  },
+
+  Primary: {
+    Main: '#E06BFA',
+    MainHover: '#D848F8',
+    MainActive: '#CE25F4',
+    MainLine: '#BB0BE4',
+    OnMain: '#010100',
+    Container: '#4B075C',
+    ContainerHover: '#5D0872',
+    ContainerActive: '#700987',
+    ContainerLine: '#830A9D',
+    OnContainer: '#F7D2FF',
+  },
+
+  Secondary: {
+    Main: '#B7F031',
+    MainHover: '#AAE12D',
+    MainActive: '#9ED229',
+    MainLine: '#91C325',
+    OnMain: '#010100',
+    Container: '#34450E',
+    ContainerHover: '#3F5411',
+    ContainerActive: '#4A6314',
+    ContainerLine: '#567117',
+    OnContainer: '#E7FABD',
+  },
+
+  Success: {
+    Main: '#56D49F',
+    MainHover: '#42CF94',
+    MainActive: '#31C688',
+    MainLine: '#1D9568',
+    OnMain: '#010100',
+    Container: '#0F4B34',
+    ContainerHover: '#135C40',
+    ContainerActive: '#166D4C',
+    ContainerLine: '#1A7E58',
+    OnContainer: '#C9F4E2',
+  },
+
+  Warning: {
+    Main: '#B7F031',
+    MainHover: '#AAE12D',
+    MainActive: '#9ED229',
+    MainLine: '#91C325',
+    OnMain: '#010100',
+    Container: '#34450E',
+    ContainerHover: '#3F5411',
+    ContainerActive: '#4A6314',
+    ContainerLine: '#567117',
+    OnContainer: '#E7FABD',
+  },
+
+  Critical: {
+    Main: '#F05B7D',
+    MainHover: '#EE3D66',
+    MainActive: '#E71042',
+    MainLine: '#D10E3C',
+    OnMain: '#010100',
+    Container: '#5C061A',
+    ContainerHover: '#700820',
+    ContainerActive: '#850925',
+    ContainerLine: '#9A0B2B',
+    OnContainer: '#FFD0DA',
+  },
+
+  Other: {
+    FocusRing: 'rgba(187, 11, 228, 0.55)',
+    Shadow: 'rgba(0, 0, 0, 1)',
+    Overlay: 'rgba(1, 1, 0, 0.82)',
+  },
+});

@@ -23,7 +23,8 @@
 }
 
 .dark-theme,
-.butter-theme {
+.butter-theme,
+.mchat-theme {
   --tc-link: hsl(213deg 100% 80%);
 
   --mx-uc-1: hsl(208, 100%, 75%);
@@ -36,6 +37,19 @@
   --mx-uc-8: hsl(94, 100%, 80%);
 
   --font-secondary: 'InterVariable', var(--font-emoji), sans-serif;
+}
+
+.mchat-theme {
+  --tc-link: #e06bfa;
+
+  --mx-uc-1: #e06bfa;
+  --mx-uc-2: #56d49f;
+  --mx-uc-3: #f05b7d;
+  --mx-uc-4: #b7f031;
+  --mx-uc-5: #bb0be4;
+  --mx-uc-6: #1d9568;
+  --mx-uc-7: #e71042;
+  --mx-uc-8: #d8ff7a;
 }
 
 html {

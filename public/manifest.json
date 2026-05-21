@@ -1,14 +1,14 @@
 {
-  "name": "My Title",
-  "short_name": "My Title",
-  "description": "A private Matrix client for your community.",
+  "name": "MChat",
+  "short_name": "MChat",
+  "description": "A Matrix client for matrix.mh.run.",
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",
   "orientation": "portrait",
   "start_url": "./",
-  "background_color": "#fff",
-  "theme_color": "#fff",
+  "background_color": "#010100",
+  "theme_color": "#BB0BE4",
   "icons": [
     {
       "src": "./public/android/android-chrome-36x36.png",

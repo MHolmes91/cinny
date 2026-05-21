@@ -1,17 +1,17 @@
 {
-  "defaultHomeserver": 1,
-  "homeserverList": ["converser.eu", "matrix.org", "mozilla.org", "unredacted.org", "xmr.se"],
-  "allowCustomHomeservers": true,
+  "defaultHomeserver": 0,
+  "homeserverList": ["matrix.mh.run"],
+  "allowCustomHomeservers": false,
 
   "branding": {
-    "appName": "My Title",
-    "deviceName": "My Title Web",
-    "logoAlt": "My Title logo",
-    "loadingText": "Loading My Title",
-    "authDescription": "Sign in with your organization account to start chatting.",
-    "welcomeTitle": "Welcome to My Title",
-    "welcomeSubtitle": "A private Matrix client for your community.",
-    "aboutSubtitle": "A private Matrix client.",
+    "appName": "MChat",
+    "deviceName": "MChat Web",
+    "logoAlt": "MChat logo",
+    "loadingText": "Loading MChat",
+    "authDescription": "Sign in with your MH.id account to start chatting.",
+    "welcomeTitle": "Welcome to MChat",
+    "welcomeSubtitle": "A client for matrix.mh.run.",
+    "aboutSubtitle": "A client for matrix.mh.run.",
     "sourceCodeLabel": "Source Code",
     "supportLabel": "Support",
     "showOtherAuthOptionsLabel": "Show other sign-in options"
@@ -21,29 +21,15 @@
     "auth": {
       "hideHomeserver": true,
       "primaryOptions": ["sso"],
-      "otherOptions": ["password", "account-switch"]
+      "otherOptions": []
     }
   },
 
   "featuredCommunities": {
-    "openAsDefault": false,
-    "spaces": [
-      "#cinny:matrix.org",
-      "#community:matrix.org",
-      "#space:unredacted.org",
-      "#librewolf-community:matrix.org",
-      "#stickers-and-emojis:tastytea.de",
-      "#videogames:waywardinn.com",
-      "#science-space:matrix.org",
-      "#libregaming-games:tchncs.de",
-      "#mathematics-on:matrix.org"
-    ],
-    "rooms": [
-      "#tuwunel:grin.hu",
-      "#freesoftware:matrix.org",
-      "#gentoo:matrix.org"
-    ],
-    "servers": ["matrixrooms.info", "matrix.org", "mozilla.org", "unredacted.org"]
+    "openAsDefault": true,
+    "rooms": ["#matrix:matrix.mh.run", "#emoji:matrix.mh.run", "#random:matrix.mh.run"],
+    "spaces": [],
+    "servers": []
   },
 
   "hashRouter": {
